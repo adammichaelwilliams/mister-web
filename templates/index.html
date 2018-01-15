@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <title>Upload new File</title>
+  <script src="/dropzone.js"></script>
+  <script src="/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="/dropzone.css">
+  <style>
+    html {
+      height: 100%;
+      width: 100%;
+      margin: 0px;
+    }
+    body {
+      height: 100%;
+      margin: 0px;
+    }
+    .dropzone {
+      display: flex;
+      flex-grow: 1;
+      flex-direction: column;
+    }
+    .center {
+      flex: 1;
+      flex-direction: row;
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .left {
+      flex: 1;
+    }
+    .right {
+      flex: 1;
+      display: flex;
+      height: 100%;
+    }
+    </style>
+    <script>
+      Dropzone.autoDiscover = false;
+
+      $(function() {
+        var fileDrop = new Dropzone("#dropzone");
+        fileDrop.on("addedfile", function(file) {
+          /* Lazy reload */
+          window.location.reload()
+        });
+      })
+    </script>
+  </head>
+  <body>
+    <div class="center">
+      <div class="left">
+      <ul>
+          {% for file in files %}
+          <li><a href="{{ directory + file }}">{{ file }}</a></li>
+          {% endfor %}
+      </ul>
+      </div>
+      <div class="right">
+        <form id="dropzone" action="/{{ directory + '/' if directory else ''}}upload" class="dropzone"></form>
+      </div>
+    </div>
+  </body>
+</html>
